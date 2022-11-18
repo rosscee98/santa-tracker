@@ -1,3 +1,4 @@
+import { getLocationCoordinates } from './getLocationCoordinates';
 import { input } from './input';
 
 const parseArrivalTime = (time: string) => {
@@ -10,15 +11,21 @@ const parseArrivalTime = (time: string) => {
     return new Date(2022, 11, day, hour, minute);
 }
 
-export const getDestinations = () => {
-    return input
+export const getDestinations = async () => {
+    // return input
+    const destinations = input
         .split(/\r?\n/)
         .filter((line) => !!line)
-        .map((line) => {
+        .map(async (line) => {
             const elements = line.split("(");
+            const name = elements[0].trim();
+
             return {
-                name: elements[0].trim(),
+                name,
                 arrivalTime: parseArrivalTime(elements[1]),
+                coordinates: await getLocationCoordinates(name),
             };
         });
+
+    return Promise.all(destinations);
 }

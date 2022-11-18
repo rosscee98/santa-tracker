@@ -17,6 +17,6 @@ const testOutput = [
     { name: "Ushuaia", arrivalTime: new Date("2022-12-25T07:30:00.000Z") },
 ]
 
-test('returns a correct array of destination objects', () => {
-    expect(getDestinations()).toEqual(testOutput);
+test('returns a correct array of destination objects', async () => {
+    expect(await getDestinations()).toEqual(testOutput.map((objOutput) => expect.objectContaining(objOutput)))
 })

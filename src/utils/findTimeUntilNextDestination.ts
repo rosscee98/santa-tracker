@@ -1,8 +1,8 @@
 import { getDestinations } from './getDestinations';
 
-export const findTimeUntilNextDestination = () => {
+export const findTimeUntilNextDestination = async () => {
     const now = new Date();
-    const destinations = getDestinations();
+    const destinations = await getDestinations();
     const nextDestination = destinations.find(({ arrivalTime }) => now < arrivalTime);
 
     if (!nextDestination) {

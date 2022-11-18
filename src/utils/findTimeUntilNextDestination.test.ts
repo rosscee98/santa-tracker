@@ -12,12 +12,12 @@ test.each([
     ["2022-12-24T20:59:40.000Z", "Arriving in Egvekinot in 1 minute"],
     ["2022-12-24T21:00:00.000Z", "Arriving in Auckland in 60 minutes"],
     ["2022-12-24T23:30:00.000Z", "Arriving in Pretoria in 75 minutes"],
-])('returns correct output for date %s', (datestring, output) => {
+])('returns correct output for date %s', async (datestring, output) => {
     mockDate(new Date(datestring));
-    expect(findTimeUntilNextDestination()).toEqual(output);
+    expect(await findTimeUntilNextDestination()).toEqual(output);
 });
 
-test('returns completion string when no destinations left', () => {
+test('returns completion string when no destinations left', async () => {
     mockDate(new Date("2022-12-26T00:00:00.000Z"));
-    expect(findTimeUntilNextDestination()).toEqual("Santa's done for this year!");
+    expect(await findTimeUntilNextDestination()).toEqual("Santa's done for this year!");
 })
