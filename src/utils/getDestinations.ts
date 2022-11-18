@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { input } from './input';
 
 const parseArrivalTime = (time: string) => {
     const hour = parseInt(time.substring(0, 2));
@@ -11,8 +11,9 @@ const parseArrivalTime = (time: string) => {
 }
 
 export const getDestinations = () => {
-    const destinations = readFileSync('src/utils/input.txt', 'utf-8')
+    return input
         .split(/\r?\n/)
+        .filter((line) => !!line)
         .map((line) => {
             const elements = line.split("(");
             return {
@@ -20,6 +21,4 @@ export const getDestinations = () => {
                 arrivalTime: parseArrivalTime(elements[1]),
             };
         });
-
-    return destinations;
 }
