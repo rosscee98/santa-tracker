@@ -9,6 +9,6 @@ export const findTimeUntilNextDestination = () => {
         return "Santa's done for this year!";
     }
 
-    const timeDifferenceInMinutes = (nextDestination.arrivalTime.getTime() - now.getTime()) / 1000 / 60;
-    return `Arriving in ${nextDestination.name} in ${timeDifferenceInMinutes} minutes`;
+    const timeDifferenceInWholeMinutes = Math.ceil((nextDestination.arrivalTime.getTime() - now.getTime()) / 1000 / 60);
+    return `Arriving in ${nextDestination.name} in ${timeDifferenceInWholeMinutes} minute${timeDifferenceInWholeMinutes > 1 ? "s" : ""}`;
 }
