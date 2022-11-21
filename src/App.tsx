@@ -1,6 +1,7 @@
 import React from 'react';
 import { ComposableMap, Geographies, Geography, Marker, Line } from 'react-simple-maps';
 import './App.css';
+import { findCurrentPosition } from './utils/findCurrentPosition';
 import { findTimeUntilNextDestination } from './utils/findTimeUntilNextDestination';
 import locationsJson from './utils/locations.json';
 
@@ -8,6 +9,7 @@ function App() {
   const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
   const label = findTimeUntilNextDestination();
   const locations = Object.entries(locationsJson);
+  const currentPos = findCurrentPosition() as [number, number];
 
   return (
     <div className="App">
@@ -30,6 +32,10 @@ function App() {
             </Marker>
           ))
         }
+        <Marker coordinates={currentPos}>
+          <circle r={4} fill="#000" />
+          <text fontSize={10}>Santa</text>
+        </Marker>
         <Line coordinates={locations.map((location) => [location[1].lng, location[1].lat])} stroke="#f00216" strokeWidth={0.7} />
       </ComposableMap>
     </div>

@@ -1,9 +1,5 @@
 import { findTimeUntilNextDestination } from './findTimeUntilNextDestination'
-
-const mockDate = (date: Date) => {
-    jest.useFakeTimers('modern');
-    jest.setSystemTime(date);
-}
+import { mockDate } from './testUtils';
 
 test.each([
     ["2022-12-24T20:00:00.000Z", "Arriving in Egvekinot in 60 minutes"],
