@@ -1,20 +1,16 @@
 import React from 'react';
 import { ComposableMap, Geographies, Geography, Marker, Line } from 'react-simple-maps';
 import './App.css';
-import { findCurrentPosition } from './utils/findCurrentPosition';
-import { findTimeUntilNextDestination } from './utils/findTimeUntilNextDestination';
-import locationsJson from './utils/locations.json';
+import { getLocationData } from './utils/getLocationData';
 
 function App() {
   const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
-  const label = findTimeUntilNextDestination();
-  const locations = Object.entries(locationsJson);
-  const currentPos = findCurrentPosition() as [number, number];
+  const { locations, currentPosition, summary } = getLocationData();
 
   return (
     <div className="App">
-      <p>{label}</p>
-      <ComposableMap projection="geoMercator" width={1000}>
+      <p>{summary}</p>
+      <ComposableMap projection="geoEqualEarth" width={1000}>
         <Geographies geography={geoUrl}>
           {
             ({ geographies }) => (
@@ -25,18 +21,18 @@ function App() {
           }
         </Geographies>
         {
-          locations.map(([name, { lat, lng }]) => (
-            <Marker key={name} coordinates={[lng, lat]}>
+          locations.map(({ name, coords }) => (
+            <Marker key={name} coordinates={coords}>
               <circle r={3} fill="#F53" />
               <text fontSize={8}>{name}</text>
             </Marker>
           ))
         }
-        <Marker coordinates={currentPos}>
+        <Marker coordinates={currentPosition}>
           <circle r={4} fill="#000" />
           <text fontSize={10}>Santa</text>
         </Marker>
-        <Line coordinates={locations.map((location) => [location[1].lng, location[1].lat])} stroke="#f00216" strokeWidth={0.7} />
+        <Line coordinates={locations.map(({ coords }) => coords)} stroke="#f00216" strokeWidth={0.7} />
       </ComposableMap>
     </div>
   );

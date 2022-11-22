@@ -1,4 +1,12 @@
 import { input } from './input';
+import locationCoords from './locations.json';
+
+type LocationCoordsInput = {
+    [key: string]: {
+        lat: number,
+        lng: number,
+    }
+}
 
 const parseArrivalTime = (time: string) => {
     const hour = parseInt(time.substring(0, 2));
@@ -10,15 +18,21 @@ const parseArrivalTime = (time: string) => {
     return new Date(2022, 11, day, hour, minute);
 }
 
-export const getDestinations = () => {
-    return input
+const getLocationCoords = (name: string): [number, number] => {
+    return Object.values((locationCoords as LocationCoordsInput)[name]).reverse() as [number, number];
+}
+
+export const buildLocations = () => (
+    input
         .split(/\r?\n/)
         .filter((line) => !!line)
         .map((line) => {
             const elements = line.split("(");
+            const name = elements[0].trim();
             return {
-                name: elements[0].trim(),
+                name,
                 arrivalTime: parseArrivalTime(elements[1]),
+                coords: getLocationCoords(name),
             };
-        });
-}
+        })
+)
