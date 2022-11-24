@@ -1,7 +1,7 @@
-import { input } from './input';
-import locationCoords from './locations.json';
+import { itinerary } from './itinerary';
+import coordinates from './coordinates.json';
 
-type LocationCoordsInput = {
+type CoordinatesInput = {
     [key: string]: {
         lat: number,
         lng: number,
@@ -18,12 +18,12 @@ const parseArrivalTime = (time: string) => {
     return new Date(2022, 11, day, hour, minute);
 }
 
-const getLocationCoords = (name: string): [number, number] => {
-    return Object.values((locationCoords as LocationCoordsInput)[name]).reverse() as [number, number];
+const getLocationCoords = (name: string) => {
+    return Object.values((coordinates as CoordinatesInput)[name]).reverse() as [number, number];
 }
 
 export const buildLocations = () => (
-    input
+    itinerary
         .split(/\r?\n/)
         .filter((line) => !!line)
         .map((line) => {

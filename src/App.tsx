@@ -2,6 +2,7 @@ import React from 'react';
 import { ComposableMap, Geographies, Geography, Marker, Line } from 'react-simple-maps';
 import './App.css';
 import { getLocationData } from './utils/getLocationData';
+import { ReactComponent as SantaIcon } from './assets/santa-icon.svg';
 
 function App() {
   const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
@@ -28,11 +29,10 @@ function App() {
             </Marker>
           ))
         }
-        <Marker coordinates={currentPosition}>
-          <circle r={4} fill="#000" />
-          <text fontSize={10}>Santa</text>
-        </Marker>
         <Line coordinates={locations.map(({ coords }) => coords)} stroke="#f00216" strokeWidth={0.7} />
+        <Marker coordinates={currentPosition}>
+          <SantaIcon x="-2.5%" y="-2.5%" width="5%" height="5%" />
+        </Marker>
       </ComposableMap>
     </div>
   );
